@@ -46,8 +46,9 @@ html.Div([
               State('upload-data', 'filename'),
               State('upload-data', 'last_modified'))
 def update_output(content, file_name, list_of_dates):
+
     if file_name!=None :
-        print(content)
+        print(type(content))
         if "mp3" in file_name :
             return html.H6("C'est bien un MP3")
         else :
