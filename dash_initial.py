@@ -1,6 +1,10 @@
 import os
-
+import io
+import base64
 import dash
+import matplotlib.pyplot as plt
+
+from pydub import AudioSegment
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output, State
@@ -15,7 +19,7 @@ server = app.server
 
 
 app.layout = html.Div([
-    html.H2('Shazam, méfie toi'),
+    html.H2('Shazam, méfie toi grandement'),
 
 html.Div([
     dcc.Upload(
@@ -45,10 +49,16 @@ html.Div([
               Input('upload-data', 'contents'),
               State('upload-data', 'filename'),
               State('upload-data', 'last_modified'))
-def update_output(content, file_name, list_of_dates):
+def update_output(contents, file_name, list_of_dates):
 
     if file_name!=None :
-        print(type(content))
+        content_type, content_string = contents.split(',')
+        decoded = base64.b64decode(content_string)
+        print(content_type)
+        with open(file_name +'test' +'.mp3', "wb") as wav_file:
+            wav_file.write(decoded)
+
+
         if "mp3" in file_name :
             return html.H6("C'est bien un MP3")
         else :
