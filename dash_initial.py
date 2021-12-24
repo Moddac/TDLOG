@@ -3,13 +3,20 @@ import io
 import base64
 import dash
 import matplotlib.pyplot as plt
+import librosa
+import ffmpeg
+import audioread
+
 
 from pydub import AudioSegment
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output, State
 
+
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
@@ -54,10 +61,16 @@ def update_output(contents, file_name, list_of_dates):
     if file_name!=None :
         content_type, content_string = contents.split(',')
         decoded = base64.b64decode(content_string)
-        print(content_type)
-        with open(file_name +'test' +'.mp3', "wb") as wav_file:
-            wav_file.write(decoded)
+        file_name=str(file_name)
 
+        file_name.replace(".mp3",".wav")
+        print(file_name)
+        path="Bibliotheque\\"+'Demo Track 1.wav'
+        with open(path, "wb") as wav_file:
+            wav_file.write(decoded)
+        print(path)
+
+        y,sr=librosa.load(path)
 
         if "mp3" in file_name :
             return html.H6("C'est bien un MP3")
