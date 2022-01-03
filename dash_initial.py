@@ -4,11 +4,10 @@ import base64
 import dash
 import matplotlib.pyplot as plt
 import librosa
-import ffmpeg
-import audioread
 
 
-from pydub import AudioSegment
+
+
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output, State
@@ -70,7 +69,7 @@ def update_output(contents, file_name, list_of_dates):
             wav_file.write(decoded)
         print(path)
 
-        y,sr=librosa.load(path)
+        #y,sr=librosa.load("12.wav")
 
         if "mp3" in file_name :
             return html.H6("C'est bien un MP3")
