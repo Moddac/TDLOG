@@ -1,59 +1,91 @@
 import datetime
 
 import dash
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc
+from dash import html
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = html.Div([
-    html.H1('Upload d\'une chanson'),
-    dcc.Upload(
-        id='upload-mp3',
-        children=html.Div([
-            'Drag and Drop or ',
-            html.A('Select Files')
-        ]),
-        style={
-            'width': '100%',
-            'height': '60px',
-            'lineHeight': '60px',
-            'borderWidth': '1px',
-            'borderStyle': 'dashed',
-            'borderRadius': '5px',
-            'textAlign': 'center',
-            'margin': '10px'
-        },
-        # Allow multiple files to be uploaded
-        multiple=True
+    ##En-tête
+
+    dbc.Container(dbc.Row(
+            [
+                dbc.Col(html.H6("Henri Pinsolle, Ramzi Sayah, Nil Parent, Timothée Pascal")),
+                dbc.Col(html.H1("Shazam méfie toi",style = {'textAlign': 'center'})),
+                dbc.Col(html.H6("Projet TDLOG 2021-2022", style = {'textAlign' : 'end'})),
+            ]
+        )
     ),
-    html.Div(id='output-mp3-upload'),
+
+    ## Bibliothèque
+
+    dbc.Container([
+        dbc.Row([
+            dbc.Col([
+                    html.H2('Bibliothèque'),
+                    dcc.Upload(
+                        id='upload-mp3',
+                        children=html.Div([
+                            'Drag and Drop or ',
+                            dbc.Button("Select File", color="primary", className="me-1")
+                            ]),
+                        style={
+                            'width': '100%',
+                            'height': '60px',
+                            'lineHeight': '60px',
+                            'borderWidth': '1px',
+                            'borderStyle': 'dashed',
+                            'borderRadius': '5px',
+                            'textAlign': 'center',
+                            },
+                        # Allow multiple files to be uploaded
+                        multiple=True
+                    )
+            ], width=2),
+            dbc.Col(html.Div(id='output-mp3-upload'), width = 8)
+        ]),
+    ]),
+
 
 
 ])
 
-
 def parse_contents(contents, filename, date):
     return html.Div([
-        html.H5(filename),
-        html.H6(datetime.datetime.fromtimestamp(date)),
-
-        # HTML images accept base64 encoded strings in the same format
-        # that is supplied by the upload
-        html.H1('Lecture'),
+        html.H2('Analyse'),
+        html.H1(filename, className="song-title"),
+        html.H5('Artiste, Album, Année de sortie'),
+        html.H6('Style, BPM'),
+        html.H6(),
         html.Audio(src=contents, controls=True),
         html.Hr(),
-        html.H1('Sélection d\'une partie de la chanson'),
+        dbc.Row([
+            dbc.Col([
+                dcc.Dropdown(
+                    options=[
+                        {'label': '1er truc à afficher', 'value': '1'},
+                        {'label': '2ème', 'value': '2'},
+                        {'label': '3ème', 'value': '3'}
+                    ],
+                    searchable=False
+                )
+            ], width=2),
+        ]),
+        
+        html.H2('Sélection d\'une partie de la chanson'),
         dcc.RangeSlider(
             count=1,
             min=-5,
             max=10,
             step=0.5,
             value=[-3, 7]
-        )
+            )
+
+
     ])
 
 
