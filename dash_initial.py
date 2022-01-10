@@ -7,7 +7,8 @@ import librosa
 
 
 
-
+import wave
+from pydub import AudioSegment
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output, State
@@ -58,6 +59,9 @@ html.Div([
 def update_output(contents, file_name, list_of_dates):
 
     if file_name!=None :
+
+
+
         content_type, content_string = contents.split(',')
         decoded = base64.b64decode(content_string)
         file_name=str(file_name)
@@ -65,8 +69,12 @@ def update_output(contents, file_name, list_of_dates):
         file_name.replace(".mp3",".wav")
         print(file_name)
         path="Bibliotheque\\"+'Demo Track 1.wav'
-        with open(path, "wb") as wav_file:
-            wav_file.write(decoded)
+        src = "Demo Track 1.mp3"
+        dst = "test.wav"
+
+        # convert wav to mp3
+        sound = AudioSegment.from_mp3(src)
+        sound.export(dst, format="wav")
         print(path)
 
         #y,sr=librosa.load("12.wav")
