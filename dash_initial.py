@@ -62,20 +62,13 @@ def update_output(contents, file_name, list_of_dates):
 
 
 
+
         content_type, content_string = contents.split(',')
         decoded = base64.b64decode(content_string)
-        file_name=str(file_name)
+        print(content_type)
+        with open(file_name +'test' +'.mp3', "wb") as wav_file:
+            wav_file.write(decoded)
 
-        file_name.replace(".mp3",".wav")
-        print(file_name)
-        path="Bibliotheque\\"+'Demo Track 1.wav'
-        src = "Demo Track 1.mp3"
-        dst = "test.wav"
-
-        # convert wav to mp3
-        sound = AudioSegment.from_mp3(src)
-        sound.export(dst, format="wav")
-        print(path)
 
         #y,sr=librosa.load("12.wav")
 

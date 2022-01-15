@@ -1,10 +1,5 @@
-import datetime
+from callback import *
 
-import dash
-import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output, State
-from dash import dcc
-from dash import html
 
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
@@ -15,7 +10,7 @@ app.layout = html.Div([
     dbc.Container(dbc.Row(
             [
                 dbc.Col(html.H6("Henri Pinsolle, Ramzi Sayah, Nil Parent, Timothée Pascal")),
-                dbc.Col(html.H1("Shazam méfie toi",style = {'textAlign': 'center'})),
+                dbc.Col(html.H1("Application",style = {'textAlign': 'center'})),
                 dbc.Col(html.H6("Projet TDLOG 2021-2022", style = {'textAlign' : 'end'})),
             ]
         )
@@ -26,7 +21,7 @@ app.layout = html.Div([
     dbc.Container([
         dbc.Row([
             dbc.Col([
-                    html.H2('Bibliothèque'),
+                    dbc.Row([html.H2('Bibliothèque'),
                     dcc.Upload(
                         id='upload-mp3',
                         children=html.Div([
@@ -41,12 +36,36 @@ app.layout = html.Div([
                             'borderStyle': 'dashed',
                             'borderRadius': '5px',
                             'textAlign': 'center',
+                            'padding' : '10 px'
                             },
                         # Allow multiple files to be uploaded
                         multiple=True
-                    )
-            ], width=2),
-            dbc.Col(html.Div(id='output-mp3-upload'), width = 8)
+                    ),html.H1("->"),]),
+                    dbc.Row([
+
+                    html.Hr(),
+                    html.H4("Mode d'emploi :"),
+                    html.H5("Téléchargez une musique (mp3/wav) ci dessus"),
+                    html.H5("Grâce à l'API Shazam on trouve les informations de la musique"),
+                    html.H5("On fait une analyse musicale du son"),
+                    html.H5("A droite : Reconnaisance du genre du son grâce au Machine Learning"),
+            ])]
+               , width=2),
+            dbc.Col([html.Div(id='output-mp3-upload'),
+                    html.Div(id="update_figs"),
+                     dcc.Dropdown(
+                         id='choice',
+                         options=[
+                             {'label': 'Wave', 'value': 'Simple'},
+                             {'label': 'Beats', 'value': 'Beats'},
+                         ],
+                         searchable=True,
+                         multi=False,
+                     ),
+                     html.Button('Calcul', id='submit-val', n_clicks=0),
+                     ], width = 8),
+
+
         ]),
     ]),
 
@@ -54,51 +73,25 @@ app.layout = html.Div([
 
 ])
 
-def parse_contents(contents, filename, date):
-    return html.Div([
-        html.H2('Analyse'),
-        html.H1(filename, className="song-title"),
-        html.H5('Artiste, Album, Année de sortie'),
-        html.H6('Style, BPM'),
-        html.H6(),
-        html.Audio(src=contents, controls=True),
-        html.Hr(),
-        dbc.Row([
-            dbc.Col([
-                dcc.Dropdown(
-                    options=[
-                        {'label': '1er truc à afficher', 'value': '1'},
-                        {'label': '2ème', 'value': '2'},
-                        {'label': '3ème', 'value': '3'}
-                    ],
-                    searchable=False
-                )
-            ], width=2),
-        ]),
-        
-        html.H2('Sélection d\'une partie de la chanson'),
-        dcc.RangeSlider(
-            count=1,
-            min=-5,
-            max=10,
-            step=0.5,
-            value=[-3, 7]
-            )
 
-
-    ])
 
 
 @app.callback(Output('output-mp3-upload', 'children'),
               Input('upload-mp3', 'contents'),
               State('upload-mp3', 'filename'),
-              State('upload-mp3', 'last_modified'))
-def update_output(list_of_contents, list_of_names, list_of_dates):
-    if list_of_contents is not None:
-        children = [
-            parse_contents(c, n, d) for c, n, d in
-            zip(list_of_contents, list_of_names, list_of_dates)]
-        return children
+              State('upload-mp3', 'last_modified'),prevent_initial_callback=True)
+def update_mp3(list_of_contents, list_of_names, list_of_dates) :
+    return update_output(list_of_contents, list_of_names, list_of_dates)
+
+
+@app.callback(Output('update_figs', 'children'),
+            Input('submit-val', 'n_clicks'),
+            State('upload-mp3', 'filename'),
+            State('choice', 'value'), prevent_initial_callback = True)
+def update_figures(n_click,file_name, choice_fig) :
+    return update_figs(n_click,file_name, choice_fig)
+
+
 
 
 if __name__ == '__main__':
