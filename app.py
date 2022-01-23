@@ -1,6 +1,4 @@
-from callback import *
-
-
+﻿from callback import *
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -22,6 +20,7 @@ app.layout = html.Div([
         dbc.Row([
             dbc.Col([
                     dbc.Row([html.H2('Bibliothèque'),
+
                     dcc.Upload(
                         id='upload-mp3',
                         children=html.Div([
@@ -52,17 +51,23 @@ app.layout = html.Div([
             ])]
                , width=2),
             dbc.Col([html.Div(id='output-mp3-upload'),
-                    html.Div(id="update_figs"),
+                     html.Div(id="update_figs"),
+
                      dcc.Dropdown(
                          id='choice',
                          options=[
                              {'label': 'Wave', 'value': 'Simple'},
-                             {'label': 'Beats', 'value': 'Beats'},
                          ],
                          searchable=True,
                          multi=False,
+                         style={'display': 'none'}
                      ),
-                     html.Button('Calcul', id='submit-val', n_clicks=0),
+                    html.Button('Calcul', id='submit-val', n_clicks=0,style={'display': 'none'}),
+                    dcc.Graph(id='wave',style={'display': 'none'}),
+                    html.Div(id='test_layout'),
+
+                    dbc.Col([html.Button('Extraire', id='extract', n_clicks=0,style={'display': 'none'}),])
+
                      ], width = 8),
 
 
@@ -77,22 +82,34 @@ app.layout = html.Div([
 
 
 @app.callback(Output('output-mp3-upload', 'children'),
+              Output('choice','style'),
+              Output('submit-val','style'),
               Input('upload-mp3', 'contents'),
               State('upload-mp3', 'filename'),
-              State('upload-mp3', 'last_modified'),prevent_initial_callback=True)
+              State('upload-mp3', 'last_modified'),prevent_initial_call = True)
 def update_mp3(list_of_contents, list_of_names, list_of_dates) :
-    return update_output(list_of_contents, list_of_names, list_of_dates)
+    if list_of_contents is not None :
+        return update_output(list_of_contents, list_of_names, list_of_dates)
 
 
-@app.callback(Output('update_figs', 'children'),
+@app.callback(
+            Output("wave",'figure'),
+            Output("wave",'style'),
+            Output("extract",'style'),
             Input('submit-val', 'n_clicks'),
             State('upload-mp3', 'filename'),
-            State('choice', 'value'), prevent_initial_callback = True)
+            State('choice', 'value'), prevent_initial_call = True)
 def update_figures(n_click,file_name, choice_fig) :
-    return update_figs(n_click,file_name, choice_fig)
+    return update_figs(n_click,file_name, choice_fig),{'display': 'block'},{'display': 'block'}
 
+@app.callback(Output('test_layout', 'children'),
+              State('upload-mp3', 'filename'),
+              Input('extract','n_clicks'),
+         [State('wave', 'relayoutData')],prevent_initial_call = True) # this triggers the event
+def update_ext(name,n_click,relayout_data) :
+    return update_extraction(name,n_click,relayout_data)
 
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, dev_tools_hot_reload=False)

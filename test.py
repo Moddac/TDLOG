@@ -1,19 +1,15 @@
-from ShazamAPI import Shazam
+import pandas as pd
+import librosa
+import numpy as np
+import plotly.express as px
 
-url='Luis Fonsi - Despacito ft. Daddy Yankee.mp3'
+import soundfile as sf
 
-def recognize(url) :
-    try :
-        mp3_file_content_to_recognize = open(url, 'rb').read()
+periods=10
 
-        shazam = Shazam(mp3_file_content_to_recognize)
-        recognize_generator = shazam.recognizeSong()
-        a = next(recognize_generator)[1]['track']
-        title = a['title']
-        artist = a['subtitle']
-        img = a['images']['coverarthq']
-        return title,artist,img
-    except
-        return 'Not Found','Not found','Not found'
+end_time='00:0'+str(1)+':'+str(30)
 
-recognize(url)
+end_time=pd.Timestamp(end_time)
+duration=(60*end_time.minute+end_time.second)
+y,sr = librosa.load("Luis Fonsi - Despacito ft. Daddy Yankee.mp3",offset= 0,duration=duration)
+sf.write('stereo_file.wav', y, sr, subtype='PCM_24')

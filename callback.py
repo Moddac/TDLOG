@@ -1,6 +1,6 @@
 import datetime
-from recognition import recognize
-from figs import figs
+from recognition import *
+from figs import *
 import base64
 import numpy as np
 from scipy.io.wavfile import write
@@ -10,6 +10,9 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash import dcc
 from dash import html
+import soundfile as sf
+import pandas as pd
+import librosa
 
 
 def parse_contents(contents, filename, date,url):
@@ -21,16 +24,11 @@ def parse_contents(contents, filename, date,url):
         html.Div([
             html.H5('Artiste : ' +artist),
             html.H5('Titre : ' + title),
-            html.Img(src=img),
+            html.Img(src=img,height=400,width=400),
         ]),
         html.H6(),
         html.Audio(src=contents, controls=True),
         html.Hr(),
-
-
-
-
-
     ])
 
 def update_output(list_of_contents, list_of_names, list_of_dates):
@@ -46,20 +44,33 @@ def update_output(list_of_contents, list_of_names, list_of_dates):
         children = [
             parse_contents(c, n, d,url) for c, n, d in
             zip(list_of_contents, list_of_names, list_of_dates)]
-        return children
+        return children,{'display': 'block'},{'display': 'block'}
 
 def update_figs(n_click,file_name, choice_fig) :
     if choice_fig is not None :
         file_name=file_name[0]
         url="Bibliotheque\ "+file_name
-        figs(url,choice_fig)
+        fig=figs(url,choice_fig)
 
         image_filename = "Figs\\" + choice_fig + ".png"  # replace with your own image
         encoded_image = base64.b64encode(open(image_filename, 'rb').read())
 
         test_base64 = base64.b64encode(open(image_filename, 'rb').read()).decode('ascii')
 
-        if choice_fig=="Spectogram" :
-            return html.Div([html.Img(src='data:image/png;base64,{}'.format(test_base64), height=800, width=800),])
-        else :
-            return html.Div([html.Img(src='data:image/png;base64,{}'.format(test_base64), height=400, width=800), ])
+        if choice_fig=="Simple" :
+            return fig
+
+
+def update_extraction(name,n_click,relayout_data) :
+    name=name[0]
+    time_begin = pd.Timestamp(relayout_data['xaxis.range[0]'])
+    time_end = pd.Timestamp(relayout_data['xaxis.range[1]'])
+    offset = time_begin.minute*60 +time_begin.second
+    duration = time_end.minute*60 +time_end.second -offset
+    path='assets/sample_'+str(n_click)+name
+    path = path.replace("mp3","wav")
+    path = path.replace(" ","")
+    path = path.replace(".",'',path.count(".")-1)
+    y,sr = librosa.load("Bibliotheque\ "+name, offset= offset,duration=duration)
+    sf.write(path, y, sr, subtype='PCM_24')
+    return [html.H5('On extrait depuis '+str(offset)+"s pendant une durée de "+str(duration)+'s'),html.Audio(src=path, controls=True,style={'display': 'block'},loop=True ),]

@@ -1,10 +1,9 @@
 from ShazamAPI import Shazam
 
-url='Luis Fonsi - Despacito ft. Daddy Yankee.mp3'
 
-def recognize(url) :
+def recognize(path) :
     try :
-        mp3_file_content_to_recognize = open(url, 'rb').read()
+        mp3_file_content_to_recognize = open(path, 'rb').read()
 
         shazam = Shazam(mp3_file_content_to_recognize)
         recognize_generator = shazam.recognizeSong()
