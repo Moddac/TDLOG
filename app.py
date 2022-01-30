@@ -72,7 +72,7 @@ app.layout = html.Div([
                      ],style={"width" : "50%"}),
 
                     dcc.Graph(id='wave',style={'display': 'none'}),
-                    html.Div(id='test_layout'),
+                    html.Div(id='layout_extract'),
 
                     dbc.Col([html.Button('Extraire', id='extract', n_clicks=0,style={'display': 'none'}),])
 
@@ -89,7 +89,7 @@ app.layout = html.Div([
 
 
 
-
+#Upload callback
 @app.callback(Output('output-mp3-upload', 'children'),
               Output('choice','style'),
               Output('submit-val','style'),
@@ -101,6 +101,7 @@ def update_mp3(list_of_contents, list_of_names, list_of_dates) :
         return update_output(list_of_contents, list_of_names, list_of_dates)
 
 
+#update figure
 @app.callback(
             Output("wave",'figure'),
             Output('y','data'),
@@ -115,15 +116,18 @@ def update_figures(n_click,file_name, choice_fig) :
     fig,y,sr=update_figs(n_click,file_name, choice_fig)
     return fig,y,sr,{'display': 'block'},{'display': 'block'},{'display': 'block'}
 
-@app.callback(Output('test_layout', 'children'),
+#update extraction
+@app.callback(Output('layout_extract', 'children'),
               State('y','data'),
               State('upload-mp3', 'filename'),
               Input('extract','n_clicks'),
          [State('wave', 'relayoutData')],prevent_initial_call = True) # this triggers the event
+
 def update_ext(y,name,n_click,relayout_data) :
     return update_extraction(name,n_click,relayout_data)
 
 
+#update music theme prediction
 @app.callback(Output('ML_prediction', 'children'),
               State('y','data'),
               State('sr','data'),

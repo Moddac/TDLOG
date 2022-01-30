@@ -17,7 +17,10 @@ import soundfile as sf
 import pandas as pd
 import librosa
 
+#All the functions used in the callbacks are here
 
+
+#For processing the upload
 def parse_contents(contents, filename, date,url):
     title, artist, img = recognize(url)
     return html.Div([
@@ -32,6 +35,7 @@ def parse_contents(contents, filename, date,url):
         html.Audio(src=contents, controls=True),
     ])
 
+#Processing the audio file
 def update_output(list_of_contents, list_of_names, list_of_dates):
     if list_of_contents is not None:
         contents=list_of_contents[0]
@@ -47,6 +51,8 @@ def update_output(list_of_contents, list_of_names, list_of_dates):
             zip(list_of_contents, list_of_names, list_of_dates)]
         return children,{'display': 'block'},{'display': 'block'}
 
+
+#updating figs
 def update_figs(n_click,file_name, choice_fig) :
     if choice_fig is not None :
         file_name=file_name[0]
@@ -61,7 +67,7 @@ def update_figs(n_click,file_name, choice_fig) :
         if choice_fig=="Simple" :
             return fig,y,sr
 
-
+#update the extract part
 def update_extraction(name,n_click,relayout_data) :
     name=name[0]
     time_begin = pd.Timestamp(relayout_data['xaxis.range[0]'])
@@ -76,6 +82,7 @@ def update_extraction(name,n_click,relayout_data) :
     sf.write(path, y, sr, subtype='PCM_24')
     return [html.H5('Extraction réussie'),html.Audio(src=path, controls=True,style={'display': 'block'},loop=True ),]
 
+#machine learning part
 def update_prediction(y,sr) :
     y = np.array(y)
     result,fig =prediction(y,sr)
