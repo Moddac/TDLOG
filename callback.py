@@ -10,6 +10,9 @@ import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
 from dash import dcc
 from dash import html
+
+
+from ML_Librosa import *
 import soundfile as sf
 import pandas as pd
 import librosa
@@ -17,7 +20,6 @@ import librosa
 
 def parse_contents(contents, filename, date,url):
     title, artist, img = recognize(url)
-
     return html.Div([
         html.H2('Analyse a partir de Shazam'),
         html.H6(filename, className="song-title"),
@@ -28,7 +30,6 @@ def parse_contents(contents, filename, date,url):
         ]),
         html.H6(),
         html.Audio(src=contents, controls=True),
-        html.Hr(),
     ])
 
 def update_output(list_of_contents, list_of_names, list_of_dates):
@@ -38,9 +39,9 @@ def update_output(list_of_contents, list_of_names, list_of_dates):
         content_type, content_string = contents.split(',')
         decoded = base64.b64decode(content_string)
 
-        with open("Bibliotheque\ "+file_name , "wb") as wav_file:
+        with open("Bibliotheque\\"+file_name , "wb") as wav_file:
             wav_file.write(decoded)
-        url="Bibliotheque\ "+file_name
+        url="Bibliotheque\\"+file_name
         children = [
             parse_contents(c, n, d,url) for c, n, d in
             zip(list_of_contents, list_of_names, list_of_dates)]
@@ -49,8 +50,8 @@ def update_output(list_of_contents, list_of_names, list_of_dates):
 def update_figs(n_click,file_name, choice_fig) :
     if choice_fig is not None :
         file_name=file_name[0]
-        url="Bibliotheque\ "+file_name
-        fig=figs(url,choice_fig)
+        url="Bibliotheque\\"+file_name
+        fig,y,sr=figs(url,choice_fig)
 
         image_filename = "Figs\\" + choice_fig + ".png"  # replace with your own image
         encoded_image = base64.b64encode(open(image_filename, 'rb').read())
@@ -58,7 +59,7 @@ def update_figs(n_click,file_name, choice_fig) :
         test_base64 = base64.b64encode(open(image_filename, 'rb').read()).decode('ascii')
 
         if choice_fig=="Simple" :
-            return fig
+            return fig,y,sr
 
 
 def update_extraction(name,n_click,relayout_data) :
@@ -71,6 +72,12 @@ def update_extraction(name,n_click,relayout_data) :
     path = path.replace("mp3","wav")
     path = path.replace(" ","")
     path = path.replace(".",'',path.count(".")-1)
-    y,sr = librosa.load("Bibliotheque\ "+name, offset= offset,duration=duration)
+    y,sr = librosa.load("Bibliotheque\\"+name, offset= offset,duration=duration)
     sf.write(path, y, sr, subtype='PCM_24')
-    return [html.H5('On extrait depuis '+str(offset)+"s pendant une durée de "+str(duration)+'s'),html.Audio(src=path, controls=True,style={'display': 'block'},loop=True ),]
+    return [html.H5('Extraction réussie'),html.Audio(src=path, controls=True,style={'display': 'block'},loop=True ),]
+
+def update_prediction(y,sr) :
+    y = np.array(y)
+    result,fig =prediction(y,sr)
+    return [html.H5("Résultat trouvé : "+result),
+            dcc.Graph(figure=fig)]

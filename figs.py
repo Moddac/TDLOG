@@ -10,6 +10,7 @@ path="Figs\\"
 
 def figs(url,choice) :
     y, sr = librosa.load(url, duration=60)
+    y0=y
     n = len(y)
     periods = n - n % sr
     y = y[:periods]
@@ -23,8 +24,10 @@ def figs(url,choice) :
 
     t = pd.date_range(start=pd.Timestamp('00:00:00'), end=end_time, periods=periods)
     t = t[::30]
-
-    fig = px.line(x=t, y=y)
+    onset_env = librosa.onset.onset_strength(y, sr=sr)
+    tempo = librosa.beat.tempo(onset_envelope=onset_env, sr=sr)
+    BPM=int(tempo[0])
+    fig = px.line(x=t, y=y,title='BPM : '+str(BPM))
     # fig.update_layout(
     #     xaxis=dict(
     #         rangeselector=dict(
@@ -38,5 +41,5 @@ def figs(url,choice) :
     #         type="date"
     #     )
     # )
-    return fig
+    return fig,y0,sr
 
