@@ -1,7 +1,47 @@
-# Projet TDLOG
-Notre projet porte sur l'ajout d'un add-on sur le logiciel de conception 3D open-source free-CAD : https://www.freecadweb.org/.
-Cet add-on est une implémentation d'une méthode d'optimisation topologique récente : https://github.com/yuanming-hu/spgrid_topo_opt.
-L'add-on devra donc :
--télécharger automatiquement tous les packages nécessaires au fonctionnement de l'add-on
--présenter une petite interface liée au logiciel CAD permettant d'indiquer les conditions limites (déplacement et force), les caractéristiques du matériaux, la proportion de matière gardée et les parties du solide non affectée. On s'inspirera pour cela d'un add-on d'optimisation déjà existant. (https://forum.freecadweb.org/viewtopic.php?t=15460)
--faire le lien entre le mailleur et le code d'optimisation puis importer le résultat pour l'afficher dans freeCAD
+# Application d'étude musicale - TDLOG
+_(juste en dessous des badges sympatiques à placer)_
+
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)  [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
+
+L'objectif de notre application est de pouvoir faire un mélange entre de la reconnaissance musicale (Shazam) mais aussi de l'analyse musicale, de l'extraction de sample mais aussi de la detection de genre 
+
+## Pour commencer
+
+Il est nécessaire d'avoir accès à une connexion internet si on souhaite faire une reconnaissance de la musique.
+
+### Pré-requis
+
+Il est nécéssaire d'avoir 
+
+- Python 64 bit  
+- FFMPEG
+- Librairies principales Python : Dash, Plotly, Numpy, Pandas, Librosa, Scipy, ShazamAPi
+
+
+### Installation
+
+Il suffit juste de run le fichier python "app.py"
+
+
+## Démarrage
+
+Une fois le fichier éxécuté, l'application se trouve en local sur l'adresse suivante :
+
+## Fabriqué avec
+
+Entrez les programmes/logiciels/ressources que vous avez utilisé pour développer votre projet
+
+_exemples :_
+* [Materialize.css](http://materializecss.com) - Framework CSS (front-end)
+* [Atom](https://atom.io/) - Editeur de textes
+
+
+
+
+## Auteurs
+SAYAH Ramzi 
+PINSOLLE Henri
+PASCAL Thimothé
+PARENT Nil
+
+
