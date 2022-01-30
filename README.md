@@ -1,7 +1,7 @@
 # Application d'étude musicale - TDLOG
 
 
-[![forthebadge](https://img.shields.io/badge/Python-3.8-brightgreen)](http://forthebadge.com)  [![forthebadge](https://img.shields.io/badge/Numpy-1.18.5-brightgreen)](http://forthebadge.com) [![forthebadge](https://img.shields.io/badge/Librosa-0.8.1-brightgreen)](http://forthebadge.com)
+[![forthebadge](https://img.shields.io/badge/Python-3.8-brightgreen)](http://forthebadge.com)  [![forthebadge](https://img.shields.io/badge/Numpy-1.18.5-brightgreen)](http://forthebadge.com) [![forthebadge](https://img.shields.io/badge/Librosa-0.8.1-brightgreen)](http://forthebadge.com) [![forthebadge](https://img.shields.io/badge/TensorFlow-2.7.0-brightgreen)](http://forthebadge.com)
 
 L'objectif de notre application est de pouvoir faire un mélange entre de la reconnaissance musicale (Shazam) mais aussi de l'analyse musicale, de l'extraction de sample mais aussi de la detection de genre. 
 
@@ -20,12 +20,17 @@ Il est nécéssaire d'avoir
 
 ### Installation
 
-Il suffit juste de run le fichier python "app.py"
+Il suffit juste de télécharger le code, puis run le fichier python "app.py"
 
 
 ## Démarrage
 
-Une fois le fichier éxécuté, l'application se trouve en local sur l'adresse suivante : http://127.0.0.1:8050
+* Une fois le fichier éxécuté, l'application se trouve en local sur l'adresse suivante : http://127.0.0.1:8050
+* L'utilisateur peut _drag and drop_ un fichier audio (mp3, wav) de son choix
+* Appel automatique à ShazamAPI
+* On peut calculer la _wave_ puis extraire une partie juste en selectionnant la partie intéressante sur le graphe
+* Une fois la _wave_ calculée il est possible de faire appel au programme de Machine Learning qui détecte le genre 
+
 
 ## Fabriqué avec
 Programmes utilisés, bibliographie
