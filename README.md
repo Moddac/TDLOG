@@ -14,7 +14,7 @@ Il est nécessaire d'avoir accès à une connexion internet si on souhaite faire
 Il est nécéssaire d'avoir 
 
 - Python 64 bit  
-- FFMPEG (https://www.ffmpeg.org)
+- [FFMPEG](https://www.ffmpeg.org)
 - Librairies principales Python : Dash, Plotly, Numpy, Pandas, Librosa, Scipy, ShazamAPI, TensorFlow
 
 
