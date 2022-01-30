@@ -1,9 +1,9 @@
 # Application d'étude musicale - TDLOG
-_(juste en dessous des badges sympatiques à placer)_
+
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)  [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
 
-L'objectif de notre application est de pouvoir faire un mélange entre de la reconnaissance musicale (Shazam) mais aussi de l'analyse musicale, de l'extraction de sample mais aussi de la detection de genre 
+L'objectif de notre application est de pouvoir faire un mélange entre de la reconnaissance musicale (Shazam) mais aussi de l'analyse musicale, de l'extraction de sample mais aussi de la detection de genre. 
 
 ## Pour commencer
 
@@ -14,8 +14,8 @@ Il est nécessaire d'avoir accès à une connexion internet si on souhaite faire
 Il est nécéssaire d'avoir 
 
 - Python 64 bit  
-- FFMPEG
-- Librairies principales Python : Dash, Plotly, Numpy, Pandas, Librosa, Scipy, ShazamAPi
+- FFMPEG (https://www.ffmpeg.org)
+- Librairies principales Python : Dash, Plotly, Numpy, Pandas, Librosa, Scipy, ShazamAPI, TensorFlow
 
 
 ### Installation
@@ -25,15 +25,14 @@ Il suffit juste de run le fichier python "app.py"
 
 ## Démarrage
 
-Une fois le fichier éxécuté, l'application se trouve en local sur l'adresse suivante :
+Une fois le fichier éxécuté, l'application se trouve en local sur l'adresse suivante : http://127.0.0.1:8050
 
 ## Fabriqué avec
-
-Entrez les programmes/logiciels/ressources que vous avez utilisé pour développer votre projet
+Programmes utilisés, bibliographie
 
 _exemples :_
-* [Materialize.css](http://materializecss.com) - Framework CSS (front-end)
-* [Atom](https://atom.io/) - Editeur de textes
+* [Dash](https://dash.plotly.com/introduction) - Framework Dash (front-end)
+* [PyCharm](https://www.jetbrains.com/fr-fr/pycharm/) - Editeur de textes
 
 
 
@@ -41,7 +40,7 @@ _exemples :_
 ## Auteurs
 SAYAH Ramzi 
 PINSOLLE Henri
-PASCAL Thimothé
+PASCAL Thimothée
 PARENT Nil
 
 
