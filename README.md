@@ -1,4 +1,4 @@
-# TDLOG-D-BG
+# Projet TDLOG
 Notre projet porte sur l'ajout d'un add-on sur le logiciel de conception 3D open-source free-CAD : https://www.freecadweb.org/.
 Cet add-on est une implémentation d'une méthode d'optimisation topologique récente : https://github.com/yuanming-hu/spgrid_topo_opt.
 L'add-on devra donc :
