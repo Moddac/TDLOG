@@ -1,7 +1,7 @@
 # Application d'étude musicale - TDLOG
 
 
-[![forthebadge](https://img.shields.io/badge/Python-3.8-brightgreen)](http://forthebadge.com)  [![forthebadge](https://img.shields.io/badge/Numpy-1.18.5-brightgreen)](http://forthebadge.com) [![forthebadge](https://img.shields.io/badge/Librosa-0.8.1-brightgreen)](http://forthebadge.com) [![forthebadge](https://img.shields.io/badge/TensorFlow-2.7.0-brightgreen)](http://forthebadge.com)
+[![forthebadge](https://img.shields.io/badge/Python-3.8-blue)](http://forthebadge.com)  [![forthebadge](https://img.shields.io/badge/Numpy-1.18.5-brightgreen)](http://forthebadge.com) [![forthebadge](https://img.shields.io/badge/Librosa-0.8.1-brightgreen)](http://forthebadge.com) [![forthebadge](https://img.shields.io/badge/TensorFlow-2.7.0-brightgreen)](http://forthebadge.com)
 
 L'objectif de notre application est de pouvoir faire un mélange entre de la reconnaissance musicale (Shazam) mais aussi de l'analyse musicale, de l'extraction de sample mais aussi de la detection de genre. 
 
