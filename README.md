@@ -30,7 +30,6 @@ Une fois le fichier éxécuté, l'application se trouve en local sur l'adresse s
 ## Fabriqué avec
 Programmes utilisés, bibliographie
 
-_exemples :_
 * [Dash](https://dash.plotly.com/introduction) - Framework Dash (front-end)
 * [PyCharm](https://www.jetbrains.com/fr-fr/pycharm/) - Editeur de textes
 
@@ -38,9 +37,9 @@ _exemples :_
 
 
 ## Auteurs
-SAYAH Ramzi 
-PINSOLLE Henri
-PASCAL Thimothée
-PARENT Nil
+* SAYAH Ramzi 
+* PINSOLLE Henri
+* PASCAL Thimothée
+* PARENT Nil
 
 
