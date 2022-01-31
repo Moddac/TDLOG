@@ -37,6 +37,8 @@ Programmes utilisés, bibliographie
 
 * [Dash](https://dash.plotly.com/introduction) - Framework Dash (front-end)
 * [PyCharm](https://www.jetbrains.com/fr-fr/pycharm/) - Editeur de textes
+* [GTZAN Dataset](https://www.kaggle.com/andradaolteanu/gtzan-dataset-music-genre-classification) - Données sur le genre d'une musique
+* [GTZAN Learning Model](https://www.kaggle.com/imsparsh/gtzan-genre-classification-deep-learning-val-92-4) - Model inspired of
 
 
 
